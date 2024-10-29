@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Angular_MessagingApp.Server", "Angular_MessagingApp.Server\Angular_MessagingApp.Server.csproj", "{8B263FC3-573E-4444-905E-A53026323D86}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C6B1A8D0-B63C-456D-A773-402563D6BBBE} = {C6B1A8D0-B63C-456D-A773-402563D6BBBE}
+	EndProjectSection
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angular_messagingapp.client", "angular_messagingapp.client\angular_messagingapp.client.esproj", "{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BUSINESS", "BUSINESS\BUSINESS.csproj", "{BCED6D08-84D5-4DC3-B416-C420CC5F9E2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DATA", "DATA\DATA.csproj", "{C6B1A8D0-B63C-456D-A773-402563D6BBBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COMMON", "COMMON\COMMON.csproj", "{179DE2B1-D560-45DC-99C7-4319A71766AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B263FC3-573E-4444-905E-A53026323D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B263FC3-573E-4444-905E-A53026323D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B263FC3-573E-4444-905E-A53026323D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B263FC3-573E-4444-905E-A53026323D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74FC8D2-65A4-4F61-B4EA-4F40CBFA21F3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{BCED6D08-84D5-4DC3-B416-C420CC5F9E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCED6D08-84D5-4DC3-B416-C420CC5F9E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCED6D08-84D5-4DC3-B416-C420CC5F9E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCED6D08-84D5-4DC3-B416-C420CC5F9E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6B1A8D0-B63C-456D-A773-402563D6BBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B1A8D0-B63C-456D-A773-402563D6BBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B1A8D0-B63C-456D-A773-402563D6BBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B1A8D0-B63C-456D-A773-402563D6BBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{179DE2B1-D560-45DC-99C7-4319A71766AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{179DE2B1-D560-45DC-99C7-4319A71766AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{179DE2B1-D560-45DC-99C7-4319A71766AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{179DE2B1-D560-45DC-99C7-4319A71766AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CAD951B-6C07-42CA-B344-6A2C5F1793A8}
+	EndGlobalSection
+EndGlobal

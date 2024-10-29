@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Register</h2>
+    <form action="#" method="POST">
+      <input type="text" placeholder="First Name" [(ngModel)]="registerModel.firstName" name="firstName" required><br>
+      <input type="text" placeholder="Last Name" [(ngModel)]="registerModel.lastName" name="lastName" required><br>
+      <input type="email" placeholder="Email" (ngModel)]="registerModel.email" name="email" required><br>
+      <input type="password" placeholder="Password" (ngModel)]="registerModel.password" name="password" required><br>
+      <input type="text" placeholder="Username" (ngModel)]="registerModel.userName" name="userName" required><br>
+      <input type="text" placeholder="Phone Number" (ngModel)]="registerModel.phoneNumber" name="phoneNumber" required><br> <!-- Telefon numarası alanı -->
+
+      <select required>
+        <option value="" disabled selected name="city" [(ngModel)]="registerModel.city" (change)="getDistricts()">Select City</option>
+        <option value="city1">City 1</option>
+        <option value="city2">,City 2</option>
+        <option value="city3">City 3</option>
+      </select><br> <!-- Şehir seçim alanı -->
+
+      <select required name="city" [(ngModel)]="registerModel.district">
+        <option value="" disabled selected>Select District</option>
+        <option value="district1">District 1</option>
+        <option value="district2">District 2</option>
+        <option value="district3">District 3</option>
+      </select><br> <!-- İlçe seçim alanı -->
+
+      <input type="password" placeholder="Password" required><br>
+      <button type="submit" onclick="submitForm()">Register</button>
+    </form>
+    <a class="link" href="login">Already have an account? Login</a>
+  </div>
+</body>
+</html>

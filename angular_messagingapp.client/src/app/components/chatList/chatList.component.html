@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat List</title>
+
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-item" *ngFor="let chat of chatService.ChatList">
+      <div *ngFor="let message of chat.messages">
+        <div class="avatar">{{message.senderAvatar}}</div>
+        <div class="chat-details">
+          <div class="chat-name">{{message.senderName}}</div>
+          <div class="chat-message">{{message.messageContent}}</div>
+        </div>
+        <div class="chat-time">{{message.timeStamp}}</div>
+      </div>
+    </div>
+    </div>
+</body>
+</html>

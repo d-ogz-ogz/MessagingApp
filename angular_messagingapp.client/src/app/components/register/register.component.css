@@ -1,0 +1,67 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #d0e8e8); /* Soft mavi-yeşil tonları */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.register-container {
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+  .register-container:hover {
+    transform: scale(1.05);
+  }
+
+h2 {
+  color: #3b8f3b;
+  margin-bottom: 20px;
+}
+
+input, select {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+  input:hover, select:hover {
+    border-color: #3b8f3b;
+  }
+
+button {
+  background-color: #3b8f3b;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+  button:hover {
+    background-color: #4fbf4f;
+  }
+
+.link {
+  display: block;
+  margin-top: 10px;
+  color: #3b8f3b;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+  .link:hover {
+    color: #65d965;
+  }
