@@ -130,7 +130,7 @@ namespace BUSINESS.Implementtions
             {
                 foreach (var logModel in userData)
                 {
-                    if (user.UserName != logModel.UserName && user.Email != logModel.Email)
+                    if (user.UserName != logModel.UserName && user.Email != logModel.Email&& logModel.Password!=null)
                     {
 
 
@@ -139,8 +139,8 @@ namespace BUSINESS.Implementtions
                         registerModel.Name = logModel.Name;
                         registerModel.SurName = logModel.SurName;
                         registerModel.PhoneNumber = logModel.PhoneNumber;
-                        var hashedPassword = HashPassword(registerModel.Password);
-                        hashedPassword = logModel.Password;
+                        var hashedPassword = HashPassword(logModel.Password);
+                     registerModel.Password= hashedPassword ;
                         registerModel.City = logModel.City;
                         registerModel.District = logModel.District;
                         registerModel.District = logModel.District;
