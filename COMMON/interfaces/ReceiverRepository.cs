@@ -5,11 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BUSINESS.Contracts
+namespace COMMON.interfaces
 {
-    public interface IUserEngine
+    public interface IReceiverRepository:IRepository<ReceiverDto>
     {
-        public Task<bool> UpdateUserSettings(UserSettingsDto userSettings);
-       
     }
 }

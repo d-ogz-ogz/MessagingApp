@@ -10,7 +10,8 @@ namespace BUSINESS.Contracts
 {
     public interface IMessageEngine
     {
-        public List<MessageDto> GetChatMessages(string chatId);
-        public bool SendMessage(int chatId, bool receiver);
+        public Task<List<MessageDto>> GetChatMessages(string chatId);
+        public  Task<bool> SendMessage(string chatId, string messageContent, string receiverId);
+        public Task AddNewChat(ReceiverDto receiver, string messageContent);
     }
 }

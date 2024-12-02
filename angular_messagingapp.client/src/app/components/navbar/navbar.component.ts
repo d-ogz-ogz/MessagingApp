@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/user.service';
+import { AuthService } from '../../services/Auth.service';
+import { ChatService } from '../../services/chat.service';
 
 
 
@@ -13,16 +14,33 @@ import { AuthService } from '../../services/user.service';
 export class NavBarComponent implements OnInit {
 
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService,public chatService:ChatService) { }
 
   ngOnInit() {
 
   }
-  //  login() {
-  //    this.authService.login();
-  //  }
-  //  logOut() {
-  //    this.authService.logOut();
-  //  }
+
+   logOut() {
+     this.authService.logOut();
+   }
+  searchMessages(event: Event) {
+    var target = event.target as HTMLInputElement
+    var keyword = target.value.trim();
+    console.log(keyword);
+    if (keyword != "") {
+      const keywordLower = keyword.toLowerCase();
+      var newList = this.chatService.ChatList.filter((p) => {
+        p.messages.some(message => {
+          message.messageContent.toLowerCase().includes(keywordLower) || message.senderName.toLowerCase().includes(keyword)
+        })
+        this.chatService.searchedChats = newList;
+        this.chatService.searchMessage = `${newList.length} result found`
+      })
+    } else {
+      this.chatService.searchedChats = [];
+      this.chatService.searchMessage = "no chat was found"
+    }
+
+  }
 
 }

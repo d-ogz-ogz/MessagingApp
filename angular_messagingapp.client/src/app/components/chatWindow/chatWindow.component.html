@@ -1,11 +1,11 @@
 <app-userProfile></app-userProfile>
-<app-message></app-message>
+
 CHAT WINDOW
 <!--<div class="chat-window">-->
-  <!-- Eğer seçili chat yoksa boş bir mesaj göster -->
-  <!--<ng-container>   *ngIf="selectedChat; else emptyChat"
+   //Eğer seçili chat yoksa boş bir mesaj göster 
+  <ng-container  *ngIf="selectedChat; else emptyChat">  
     <div class="chat-header">
-<div> <img class="userAvatar" width="50px" height="50px"> {{chat.user.name}} </div>
+<div> <img class="userAvatar" [src]={{receiverProfilePic}} width="50px" height="50px"> {{receiver.name}} </div>
     </div>
     <div class="chat-messages">
       <div *ngFor="let message of selectedChat.messages" class="message">
@@ -13,17 +13,15 @@ CHAT WINDOW
       </div>
     </div>
     <div class="chat-input">
-      <input type="text" [(ngModel)]="newMessage" placeholder="Mesajınızı yazın..." />
+      <input type="text" [(ngModel)]="newMessage.messageContent" placeholder="..." />
       <button (click)="sendMessage()">Gönder</button>
     </div>
-  </ng-container>-->
-
-  <!-- Eğer chat seçilmediyse burası gösterilecek -->
-  <!--<ng-template #emptyChat>
+  </ng-container>
+  <ng-template #emptyChat>
     <div class="empty-chat">
-      <p>Sohbet seçilmedi.</p>
+      <p> Empty</p>
     </div>
   </ng-template>
-</div>-->
+
 
 

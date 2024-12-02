@@ -1,12 +1,12 @@
 export class UserModel {
-  id!: number;
+  id!: string;
   name!: string;
   firstName!: string;
   lastName!: string;
   userName!: string;
   password!: string;
+  profilePic!: string;
   email!: string
-  city!: string
-  district!: string
   phoneNumber!: string;
+  isSuccess: boolean = false;
 }

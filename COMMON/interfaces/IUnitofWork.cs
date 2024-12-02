@@ -11,6 +11,7 @@ namespace COMMON.interfaces
         IChatRepository chats { get; }
         IMessageRepository messages { get; }
         IUserRepository users { get; }
+        IReceiverRepository receivers { get; }
 
     
     }

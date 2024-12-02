@@ -9,31 +9,96 @@
   <div class="register-container">
     <h2>Register</h2>
     <form action="#" method="POST">
-      <input type="text" placeholder="First Name" [(ngModel)]="registerModel.firstName" name="firstName" required><br>
-      <input type="text" placeholder="Last Name" [(ngModel)]="registerModel.lastName" name="lastName" required><br>
-      <input type="email" placeholder="Email" (ngModel)]="registerModel.email" name="email" required><br>
-      <input type="password" placeholder="Password" (ngModel)]="registerModel.password" name="password" required><br>
-      <input type="text" placeholder="Username" (ngModel)]="registerModel.userName" name="userName" required><br>
-      <input type="text" placeholder="Phone Number" (ngModel)]="registerModel.phoneNumber" name="phoneNumber" required><br> <!-- Telefon numarası alanı -->
+      <div>
+        <input type="text" placeholder="First Name" [(ngModel)]="registerModel.firstName" name="firstName" formControlName="firstName" required><br>
+        <ng-container class="mb-1" *ngIf="registerForm?.get('firstName')?.dirty && registerForm?.get('firstName')?.touched && registerForm?.get('firstName')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('firstName')?.errors?.['minlength']">
+            Your User Name must be contain 2 character at least
+          </div>
+          <div class="alert alert-danger" *ngIf="registerForm?.get('firstName')?.errors?.['required']">
+            Please enter a valid User Name
+          </div>
+        </ng-container>
+      </div>
 
-      <select required>
-        <option value="" disabled selected name="city" [(ngModel)]="registerModel.city" (change)="getDistricts()">Select City</option>
-        <option value="city1">City 1</option>
-        <option value="city2">,City 2</option>
-        <option value="city3">City 3</option>
-      </select><br> <!-- Şehir seçim alanı -->
+      <div>
+        <input type="text" placeholder="Last Name" [(ngModel)]="registerModel.lastName" name="lastName" formControlName="lastName" required><br>
+        <ng-container class="mb-1" *ngIf="registerForm?.get('lastName')?.dirty && registerForm?.get('lastName')?.touched && registerForm?.get('lastName')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('lastName')?.errors?.['minlength']">
+            Your Last Name must be contain 2 character at least
+          </div>
+          <div class="alert alert-danger" *ngIf="registerForm?.get('lastName')?.errors?.['required']">
+            Please enter a valid Last Name
+          </div>
+        </ng-container>
+      </div>
+      <div>
+        <input type="email" placeholder="Email" (ngModel)]="registerModel.email" name="email" formControlName="email" required><br>
+        <ng-container class="mb-1" *ngIf="registerForm?.get('email')?.dirty && registerForm?.get('email')?.touched && registerForm?.get('email')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('email')?.errors?.['email']">
+            Please enter a valid email
+          </div>
+        </ng-container>
+      </div>
+      <div>
+        <input type="text" placeholder="Username" (ngModel)]="registerModel.userName" name="userName" formControlName="userName" required><br>
+        <ng-container class="mb-1" *ngIf="registerForm?.get('userName')?.dirty && registerForm?.get('userName')?.touched && registerForm?.get('userName')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('userName')?.errors?.['minlength']">
+            Your Last Name must be contain 2 character at least
+          </div>
+          <div class="alert alert-danger" *ngIf="registerForm?.get('userName')?.errors?.['password']">
+            Please enter a valid Username
+          </div>
+        </ng-container>
+      </div>
+      <div>
+        <input type="text" placeholder="Phone Number" (ngModel)]="registerModel.phoneNumber" name="phoneNumber" formControlName="phoneNumber" required><br> <!-- Telefon numarası alanı -->
+        <ng-container class="mb-1" *ngIf="registerForm?.get('phoneNumber')?.dirty && registerForm?.get('phoneNumber')?.touched && registerForm?.get('phoneNumber')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('phoneNumber')?.errors?.['required']">
+            Please enter a valid Phone Number
+          </div>
+        </ng-container>
+      </div>
+      <div>
+        <input type="password" placeholder="Password" (ngModel)]="registerModel.password" name="password" formControlName="password" required><br>
+        <ng-container class="mb-1" *ngIf="registerForm?.get('password')?.dirty && registerForm?.get('password')?.touched && registerForm?.get('password')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('password')?.errors?.['password']">
+            Please enter a valid password
+          </div>
+        </ng-container>
+      </div>
 
-      <select required name="city" [(ngModel)]="registerModel.district">
-        <option value="" disabled selected>Select District</option>
-        <option value="district1">District 1</option>
-        <option value="district2">District 2</option>
-        <option value="district3">District 3</option>
-      </select><br> <!-- İlçe seçim alanı -->
+      <div>
+        <textarea type="text" placeholder="Shipping Address" (ngModel)]="registerModel.shippingAddress" name="shippingAddress" formControlName="shipiingAddress" required> </textarea><br>
+        <ng-container class="mb-1" *ngIf="registerForm?.get('password')?.dirty && registerForm?.get('password')?.touched && registerForm?.get('password')?.errors">
+          <div class="alert alert-danger" *ngIf="registerForm?.get('shippingAddress')?.errors?.['password']">
+            Please enter a valid Shipping Address
+          </div>
+        </ng-container>
+      </div>
 
-      <input type="password" placeholder="Password" required><br>
+      <div class="input-group">
+
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="consent" name="customer_allow" formControlName="consent" required [(ngModel)]="registerModel.consent">
+          <label class="form-check-label" for="consent">I allow my information to be stored</label>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="inform" formControlName="inform" [(ngModel)]="registerModel.inform">
+          <label class="form-check-label" for="inform">I want to be informed about campaigns and promotions </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="profilePic">Profile Picture</label>
+        <input type="file" id="profilePic" (change)="onFileSelected($event)" />
+        <img src="" alt="Profile Picture" class="profile-pic-preview" />
+      </div>
+
       <button type="submit" onclick="submitForm()">Register</button>
     </form>
     <a class="link" href="login">Already have an account? Login</a>
   </div>
 </body>
 </html>
+

@@ -1,0 +1,30 @@
+.message-list {
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.message-box {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #4caf50;
+}
+
+  .message-box h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+  }
+
+  .message-box p {
+    margin: 0 0 5px;
+    font-size: 16px;
+    color: #555;
+  }
+
+.timestamp {
+  font-size: 12px;
+  color: #999;
+}

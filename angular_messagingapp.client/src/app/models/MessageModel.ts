@@ -1,14 +1,9 @@
 
 export class MessageModel {
-  senderName: string;
-  senderAvatar: string;
-  messageContent: string;
-  timeStamp: Date;
-
-  constructor(senderName: string, senderAvatar: string, messageContent: string, timeStamp: Date) {
-    this.senderName = senderName;
-    this.senderAvatar = senderAvatar
-    this.messageContent = messageContent;
-    this.timeStamp = timeStamp;
-  }
+  id!:string
+  senderName: string = String(localStorage.getItem("loggedUser"));
+  senderAvatar: string = String(localStorage.getItem("userPP"));
+  messageContent!: string;
+  timeStamp!: Date;
 }
+

@@ -1,0 +1,34 @@
+<div class="user-setting-container">
+  <h2>Profile Settings</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="userName">User Name</label>
+      <input type="text" id="userName" [(ngModel)]="userSettingsModel.userName" name="userName" required />
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input type="tel" id="phoneNumber" [(ngModel)]="userSettingsModel.phoneNumber" name="phoneNumber" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" [(ngModel)]="userSettingsModel.email" name="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" [(ngModel)]="userSettingsModel.password" name="password" required />
+    </div>
+
+    <div class="form-group">
+      <label for="profilePic">Profile Picture</label>
+      <input type="file" id="profilePic" (change)="onFileSelected($event)" />
+      <div *ngIf="user.profilePic">
+        <img [src]="userSettingsModel.profilePic" alt="Profile Picture" class="profile-pic-preview" />
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Save Changes</button>
+  </form>
+</div>

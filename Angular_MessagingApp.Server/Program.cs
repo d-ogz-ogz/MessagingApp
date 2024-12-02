@@ -4,6 +4,7 @@ using BUSINESS.Implementtions;
 using COMMON.interfaces;
 using DATA.Db;
 using DATA.Implemetations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +29,11 @@ builder.Services.AddScoped<IAuthEngine, AuthEngine>();
 builder.Services.AddScoped<IChatEngine, ChatEngine>();
 builder.Services.AddScoped<IMessageEngine, MessageEngine>();
 builder.Services.AddSingleton<MessagingAppDbContext>();
-
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+});
 
 var app = builder.Build();
 

@@ -5,19 +5,23 @@ import { ChatService } from '../../services/chat.service';
 
 
 @Component({
-  selector: 'app-chatList',
-  templateUrl: './chatList.component.html',
-  styleUrl: './chatList.component.css'
+  selector: 'app-search',
+  templateUrl: './searchPage.component.html',
+  styleUrl: './searchPage.component.css'
 })
-export class ChatListComponent implements OnInit {
+export class SearchPageComponent implements OnInit {
+
 
   constructor(public chatService:ChatService) {}
 
   ngOnInit() {
     this.chatService.getChats();
   }
-  getChatById(chatId:number) {
-    this.chatService.getChatById(chatId);
-  }
+
 
 }
+
+/*var app = angular.module("messageApp,[]")
+
+app.controller("messageController"['$scope,function($scope)'])*/
+

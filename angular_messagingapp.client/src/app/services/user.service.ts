@@ -2,10 +2,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core'
 import { Router } from '@angular/router';
-import { LoginModel } from '../models/LoginModel';
-import { UserModel } from '../models/UserModel';
-import { LoginResponseModel } from '../models/LoginResponseModel';
-
+import { MessageModel } from '../models/MessageModel';
+import { ChatModel } from '../models/ChatModel';
+import { UserSettingsModel } from '../models/UserSettingsModel';
 
 
 
@@ -14,36 +13,20 @@ import { LoginResponseModel } from '../models/LoginResponseModel';
   providedIn: 'root'
 })
 
-export class AuthService {
+export class UserService {
   private apiUrl: string = "http://localhost:5062";
-  isLogged = false;
-  userExist = false;
-  loggedUser = new UserModel;
-  isRegisterOk = false;
-
+  isSettingsUpdateOk: boolean = false
 
   constructor(private http: HttpClient, private router: Router) { }
-  login(loginUser: LoginModel) {
 
-
-    this.http.post<LoginResponseModel>("apiUrl+/Auth/Login", loginUser, {
-      headers: {
-        "Authorization": "Bearer" + localStorage.getItem("token")
+  UpdateUserSettings(userSettings: UserSettingsModel) {
+    this.http.post<boolean>("/User/UpdateUserSettings", userSettings).subscribe(res => {
+      if (res == true) {
+        this.isSettingsUpdateOk = true;
       }
-    }).subscribe(
-      res => {
-
-        this.loggedUser = res.user as UserModel;
-         this.isLogged = true;
-        this.userExist = true;
-        localStorage.setItem("user", this.loggedUser.name);
-        localStorage.setItem("token",res.token)
-      })
-  }
-  Register(user: UserModel) {
-
-    this.http.post("apiUrl+/Auth/Register", user).subscribe(()=> this.isRegisterOk=true)
+    })
   }
 
 }
+
 

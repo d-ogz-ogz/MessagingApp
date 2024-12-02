@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from '../../models/UserModel';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/user.service';
+import { FormBuilder, FormControl, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
+import { AuthService } from '../../services/Auth.service';
 
 
 
@@ -21,29 +21,38 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService,private formBuilder:FormBuilder) { }
 
   ngOnInit() {
-    this.getCities();
+
   }
 
   submitForm() {
-
+    this.authService.Register(this.registerModel);
   }
-  getCities() {
 
-  }
-  getDistricts() {
 
+
+  onfileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.registerModel.profilePic = e.target.result;
+        reader.readAsDataURL(file);
+      }
+    }
   }
+
 
   createRegisterForm() {
     this.registerForm = this.formBuilder.group({
-      firstName: new FormControl("", [Validators.required]),
-      lastName: new FormControl("", [Validators.required]),
-      userName: new FormControl("", [Validators.required, Validators.minLength(4)]),
+      firstName: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      lastName: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      userName: new FormControl("", [Validators.required, Validators.minLength(2)]),
       password: new FormControl("", [Validators.required]),
       email: new FormControl("", [Validators.required, Validators.email]),
-      city: new FormControl("", [Validators.required]),
-      district: new FormControl("", [Validators.required]),
       phoneNumber: new FormControl("", [Validators.required]),
+      shippingAddress: new FormControl("", [Validators.required]),
+      consent: new FormControl("", [Validators.required]),
+      inform: new FormControl("", [Validators.required]),
 
 
     })

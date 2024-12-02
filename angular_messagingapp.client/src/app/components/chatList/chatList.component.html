@@ -8,16 +8,20 @@
 </head>
 <body>
   <div class="chat-container">
-    <div class="chat-item" *ngFor="let chat of chatService.ChatList">
-      <div *ngFor="let message of chat.messages">
-        <div class="avatar">{{message.senderAvatar}}</div>
-        <div class="chat-details">
-          <div class="chat-name">{{message.senderName}}</div>
-          <div class="chat-message">{{message.messageContent}}</div>
-        </div>
-        <div class="chat-time">{{message.timeStamp}}</div>
+
+    <div class="chat-item" *ngFor="let chat of chatService.ChatList" >
+      <div>
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="avatar">{{chat.receiver.profilePic}}</div>
+          <div class="chat-name">{{chat.receiver.name}}</div>
       </div>
-    </div>
+        <div class="chat-details">
+          <div class="chat-details">
+            <div class="chat-message" (click)="getChatById(chat.id)">{{chat.lastMessage}}</div>
+          </div>
+          <div class="chat-time">{{message.adding}}</div>
+        </div>
+      </div>
     </div>
 </body>
 </html>

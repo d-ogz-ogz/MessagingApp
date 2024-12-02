@@ -25,7 +25,11 @@ namespace DATA.Implemetations
         {
             return await _collection.Find(_ => true).ToListAsync();
         }
-
+     public async Task<List<T>> GetFilteredAsync(Expression<Func<T,bool>> filter)
+        {
+            var query = _collection.AsQueryable().Where(filter);
+            return await query.ToListAsync();
+        }
         public async Task<T> GetByIdAsync(string id)
         {
             return await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
@@ -42,7 +46,9 @@ namespace DATA.Implemetations
         }
 
         public async Task DeleteAsync(string id)
+
         {
+            //var filter = Builders<T>.Filter.Eq("Id", id);
             await _collection.DeleteOneAsync(x => x.Id == id);
         }
     }

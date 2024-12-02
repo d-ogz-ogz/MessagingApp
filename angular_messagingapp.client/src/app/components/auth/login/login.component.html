@@ -12,8 +12,29 @@
     <div class="login-container">
       <h2>Login</h2>
       <form action="#" method="POST">
-        <input type="text" class="col-12" placeholder="First Name" [(ngModel)]="loginModel.userName" required><br>
-        <input type="password" placeholder="Password" required (change)="handleChange()"  [(ngModel)]="loginModel.password"><br>
+        <div>
+
+          <input type="text" class="col-12" placeholder="userName" [(ngModel)]="loginModel.userName" formControlName="userName" required><br>
+          <ng-container *ngIf="loginForm?.get('userName')?.touched && loginForm.get('userName')?.errors">
+            <div class="alert alert-danger" *ngIf="loginForm.get('userName')?.errors?.['required']">
+              Please enter your User Name
+            </div>
+            <div class="alert alert-danger" *ngIf="loginForm?.get('userName')?.errors?.['minlength']">
+              Your Last Name must be contain 3 character at least
+            </div>
+          </ng-container>
+        </div>
+        <div>
+
+          <input type="password" class="col-12" placeholder="password" [(ngModel)]="loginModel.password" formControlName="password" required><br>
+          <ng-container *ngIf="loginForm?.get('password')?.touched && loginForm.get('password')?.errors">
+            <div class="alert alert-danger" *ngIf="loginForm.get('password')?.errors?.['required']">
+              Please enter your Password
+            </div>
+          </ng-container>
+        </div>
+
+
         <button type="submit">Login</button>
       </form>
       <a class="link" href="login" (click)="login()">Already have an account? Login</a>

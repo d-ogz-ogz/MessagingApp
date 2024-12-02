@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="messageApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results</title>
+</head>
+<body>
+  <div class="search-container">
+    <input type="text"
+           placeholder="Mesajları ara..."
+           class="search-box">
+  </div>
+  <div class="message-list">
+    <div class="message-box" *ngFor="let message in chatService.searchedChats">
+      <h3> <b>
+  {{ message.senderName }} </b></h3>
+      <p>{{ message.messageContent
+  }}</p>
+  <span class="timestamp">{{ message.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
+</div>
+  </div>
+</body>
+</html>
+
+
+
+<!--<body ng-controller="messageController">
+  <div ng-repeat="message in messages| filter:searchText">
+  </div>
+
+</body>-->

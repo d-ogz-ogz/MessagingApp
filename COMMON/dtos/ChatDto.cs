@@ -14,7 +14,10 @@ namespace COMMON.dtos
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public ReceiverDto Receiver { get; set; }
+        public ReceiverDto? Receiver { get; set; }
+        public string? LastMessaage { get; set; }
+        public string? UserId { get; set; }
+        public DateTime Adding { get; set; }
         public List<MessageDto>? Messages { get; set; }
     }
 }

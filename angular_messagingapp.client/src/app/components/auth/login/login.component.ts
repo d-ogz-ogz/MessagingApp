@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { LoginModel } from '../../../models/LoginModel';
-import { AuthService } from '../../../services/user.service';
+import { AuthService } from '../../../services/Auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
@@ -21,16 +21,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
   }
-  handleChange() {
-    console.log(this.loginModel.userName)
-  }
+
   login() {
     this.authService.login(this.loginModel)
   }
 
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
-      userName: new FormControl("", [Validators.required, Validators.minLength(4)]),
+      userName: new FormControl("", [Validators.required, Validators.minLength(3)]),
       password: new FormControl("", [Validators.required]),
 
     })

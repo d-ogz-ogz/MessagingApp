@@ -15,7 +15,7 @@ namespace COMMON.interfaces
         public Task<T> GetByIdAsync(string id);
 
         public Task CreateAsync(T entity);
-
+        public  Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> filter);
 
         public Task UpdateAsync(string id, T entity);
 

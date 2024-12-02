@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="src\app\components\chatList\" />
     <Folder Include="src\app\components\chatWindow\" />
-    <Folder Include="src\app\components\message\" />
     <Folder Include="src\app\components\userProfile\" />
   </ItemGroup>
 </Project>

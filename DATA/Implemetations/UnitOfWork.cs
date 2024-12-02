@@ -20,6 +20,7 @@ namespace DATA.Implemetations
             chats = new ChatRepository(_context);
             messages = new MessageRepository(_context);
             users = new UserRepository(_context);
+            receivers=new ReceiverRepository(_context);
 
         }
 
@@ -29,6 +30,6 @@ namespace DATA.Implemetations
 
         public IUserRepository users { get; private set; }
 
-  
+        public IReceiverRepository receivers { get; private set; }
     }
 }
