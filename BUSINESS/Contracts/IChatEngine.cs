@@ -9,7 +9,7 @@ namespace BUSINESS.Contracts
 {
     public interface IChatEngine
     {
-        public  Task<List<ChatDto>> GetChats(string userId);
+        public  Task<List<ChatDto>> GetUserChats();
         public  Task<ChatDto> GetChatById(string chatId);
 
 

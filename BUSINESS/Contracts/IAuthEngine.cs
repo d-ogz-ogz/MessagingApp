@@ -1,4 +1,5 @@
 ﻿using COMMON.dtos;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace BUSINESS.Contracts
     {
         public LoginUser Login(LoginDto loggedUser);
 
-        public UserDto Register(UserDto user);
+        public  Task<UserDto> Register(UserDto user, IFormFile? profilePic = null);
     }
 }

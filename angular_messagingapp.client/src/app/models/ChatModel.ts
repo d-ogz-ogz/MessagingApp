@@ -6,7 +6,7 @@ export class ChatModel {
  receiver!:ReceiverModel
   lastMessage!:string
   adding!:Date
-  messages: MessageModel[]=[]
+
 }
 
 

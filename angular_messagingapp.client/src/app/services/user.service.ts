@@ -19,8 +19,8 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  UpdateUserSettings(userSettings: UserSettingsModel) {
-    this.http.post<boolean>("/User/UpdateUserSettings", userSettings).subscribe(res => {
+  UpdateUserSettings(userSettingsData: FormData) {
+    this.http.post<boolean>("/User/UpdateUserSettings", userSettingsData).subscribe(res => {
       if (res == true) {
         this.isSettingsUpdateOk = true;
       }

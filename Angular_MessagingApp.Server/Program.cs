@@ -1,5 +1,6 @@
 using Angular_MessagingApp.Server;
 using BUSINESS.Contracts;
+using BUSINESS.hubs;
 using BUSINESS.Implementtions;
 using COMMON.interfaces;
 using DATA.Db;
@@ -22,11 +23,13 @@ builder.Services.AddStackExchangeRedisCache(opt =>
     opt.Configuration = "localhost:6379";
     opt.InstanceName = "MyApp";
 });
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<IUnitofWork, UnitOfWork>();
 builder.Services.AddScoped<IUserEngine, UserEngine>();
 builder.Services.AddScoped<IAuthEngine, AuthEngine>();
 builder.Services.AddScoped<IChatEngine, ChatEngine>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IMessageEngine, MessageEngine>();
 builder.Services.AddSingleton<MessagingAppDbContext>();
 builder.Services.AddAuthentication(options =>
@@ -47,12 +50,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UseEndpoints(endpoints =>
+endpoints.MapHub<ChatHub>("/chatHub"));
+app.UseHttpsRedirection();
 app.MapControllers();
-
 app.MapFallbackToFile("/index.html");
 
 app.Run();

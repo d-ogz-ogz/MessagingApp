@@ -54,9 +54,9 @@
           </div>
         </div>
     </div>
-    <div class="mb-3">
+    <div class="mb-3" >
       <label for="profilePic" class="form-label">Profile Pic</label>
-      <input class="form-control" type="file" formControlName="profilePic" [(ngModel]]="registerModel.profilePic" name="registerModel.profilePic" id="formFile">
+      <input class="form-control" type="file" (change)="onFileSelected($event)" formControlName="profilePic" name="registerModel.profilePic" id="formFile">
       <img *ngIf="!registerModel.profilePic" src="https://i.pinimg.com/736x/31/83/f1/3183f173fe52c5951701cf03a39a029a.jpg"/>
     </div>
     <div>

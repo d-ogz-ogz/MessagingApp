@@ -1,9 +1,13 @@
 ﻿using BUSINESS.Contracts;
 using COMMON.dtos;
 using COMMON.interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,14 +16,23 @@ namespace BUSINESS.Implementtions
     public class ChatEngine : IChatEngine
     {
         private readonly IUnitofWork _uow;
-        public ChatEngine(IUnitofWork uow)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public ChatEngine(IUnitofWork uow,IHttpContextAccessor httpContextAccessor)
         {
             _uow = uow;
+           _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<List<ChatDto>> GetChats(string userId)
+        public async Task<List<ChatDto>> GetUserChats()
         {
+            var user = await MessageEngine.GetLoggedUser(_httpContextAccessor, _uow);
+
             List<ChatDto> userchats = new List<ChatDto>();
-            ; var chats = await _uow.chats.GetFilteredAsync(r => r.Id == userId);
+            if (user.Id.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+             var chats = await _uow.chats.GetFilteredAsync(r => r.Id == user.Id);
             if (chats == null || !chats.Any())
             {
                 return new List<ChatDto> { new ChatDto() };
@@ -49,7 +62,7 @@ namespace BUSINESS.Implementtions
         {
             var selectedChat = await _uow.chats.GetByIdAsync(chatId);
             if (selectedChat == null)
-                return null;
+                return new ChatDto();
 
             var receiver = await _uow.receivers.GetByIdAsync(selectedChat?.Receiver.Id);
             var messages = await _uow.messages.GetFilteredAsync(res => res.Id == chatId);
@@ -62,7 +75,9 @@ namespace BUSINESS.Implementtions
             };
         }
 
-    
+
+
+
     }
 }
 

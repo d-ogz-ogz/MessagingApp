@@ -13,5 +13,6 @@ namespace BUSINESS.Contracts
         public Task<List<MessageDto>> GetChatMessages(string chatId);
         public  Task<bool> SendMessage(string chatId, string messageContent, string receiverId);
         public Task AddNewChat(ReceiverDto receiver, string messageContent);
+        public  Task<bool> UpdateChatMessages(string chatId, MessageDto message);
     }
 }

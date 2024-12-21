@@ -49,9 +49,9 @@ export class AuthService {
     localStorage.removeItem("userPP");
     this.router.navigate(["/"]);
   }
-  Register(user: UserModel) {
+  Register(registerFormData:FormData) {
     //this.isRegisterOk = res?.id != null && res?.id > 0;
-    this.http.post<UserModel>(`${this.apiUrl}/Auth/Register`, user).subscribe(
+    this.http.post<UserModel>(`${this.apiUrl}/Auth/Register`, registerFormData).subscribe(
       (res) => {
         if (res.isSuccess === true) {
           this.isRegisterOk = true;

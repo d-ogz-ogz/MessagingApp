@@ -20,9 +20,9 @@ namespace Angular_MessagingApp.Server.Controllers
            return this._authEngine.Login(loggedUser);
 
         }
-        public UserDto Register(UserDto user)
+        public  async Task<UserDto> Register([FromForm] UserDto user, IFormFile? profilePic =null)
         {
-            return this._authEngine.Register(user);
+            return await this._authEngine.Register(user,profilePic);
         }
     }
 }

@@ -25,11 +25,12 @@ import { UserService } from './services/User.service';
     UserProfileComponent,
     LoginComponent,
     HomeComponent,
-    SearchPageComponent
+    SearchPageComponent,
+   
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule, FormsModule
+    AppRoutingModule, FormsModule, 
   ],
   providers: [AuthService, ChatService, MessageService,UserService],
   bootstrap: [AppComponent]

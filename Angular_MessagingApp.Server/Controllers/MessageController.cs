@@ -13,14 +13,6 @@ namespace Angular_MessagingApp.Server.Controllers
         {
             _messageEngine = messageEngine;
         }
-
-        [HttpGet("GetChatMessages")]
-        public Task<List<MessageDto>> GetChatMessages(string chatId)
-        {
-            return _messageEngine.GetChatMessages(chatId);
-        }
-
-
         [HttpGet("SendMessage")]
         public async Task<bool> SendMessage(string chatId, string messageContent, string receiverId)
         {
@@ -30,6 +22,17 @@ namespace Angular_MessagingApp.Server.Controllers
         public async Task AddNewChat(ReceiverDto receiver, string messageContent)
         {
              await _messageEngine.AddNewChat(receiver, messageContent);
+        }
+        [HttpGet("GetChatMessages")]
+        public async Task<List<MessageDto>> GetChatMessages(string chatId)
+        {
+            var res = await _messageEngine.GetChatMessages(chatId);
+            return res;
+        }
+        public async Task<bool> UpdateChatMessages(string chatId, MessageDto message)
+        {
+            var res= await this._messageEngine.UpdateChatMessages(chatId, message);
+            return res;
         }
     }
 }

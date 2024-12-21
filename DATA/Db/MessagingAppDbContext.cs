@@ -13,6 +13,7 @@ namespace DATA.Db
     public class MessagingAppDbContext 
     {
         private readonly IMongoDatabase _db;
+        internal IMongoClient? MongoClient;
 
         public MessagingAppDbContext(IConfiguration config)
         {

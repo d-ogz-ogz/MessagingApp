@@ -16,9 +16,9 @@ namespace Angular_MessagingApp.Server.Controllers
             _userEngine = userEngine;
         }
 
-       public Task<bool> UpdateUserSettings(UserSettingsDto userSettings)
+       public Task<bool> UpdateUserSettings([FromForm] UserSettingsDto userSettings,IFormFile profilePic)
         {
-           return this._userEngine.UpdateUserSettings(userSettings);
+           return this._userEngine.UpdateUserSettings(userSettings,profilePic);
         }
     }
 }

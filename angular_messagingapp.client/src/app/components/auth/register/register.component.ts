@@ -21,7 +21,21 @@ export class RegisterComponent implements OnInit {
 
   }
   submitForm() {
-    this.authService.Register(this.registerModel);
+    const formData = new FormData();
+    formData.append("firstName", this.registerModel.firstName)
+    formData.append("lastName", this.registerModel.lastName)
+    formData.append("userName", this.registerModel.userName)
+    formData.append("password", this.registerModel.password)
+    formData.append("email", this.registerModel.email)
+    formData.append("profilePic", this.registerModel.profilePic)
+    formData.append("phoneNumber", this.registerModel.phoneNumber)
+    this.authService.Register(formData)
+  }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.registerModel.profilePic = file;
+    }
   }
 
   createRegisterForm() {
@@ -33,7 +47,7 @@ export class RegisterComponent implements OnInit {
       profilePic: new FormControl(""),
       email: new FormControl("", [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"), Validators.email]),
       phoneNumber: new FormControl("", [Validators.required, Validators.pattern("^(?:\\+90|0)?5\\d{9}$")]),
-,
+
     })
   }
 }

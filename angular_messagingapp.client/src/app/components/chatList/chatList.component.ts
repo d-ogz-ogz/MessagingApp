@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
+import { MessageModel } from '../../models/MessageModel';
 
 
 
@@ -12,12 +14,23 @@ import { ChatService } from '../../services/chat.service';
 export class ChatListComponent implements OnInit {
 
   constructor(public chatService:ChatService) {}
-
+  private hubConnection!: HubConnection;
   ngOnInit() {
-    this.chatService.getChats();
+    this.hubConnection = new HubConnectionBuilder().withUrl('http://localhost:5000/chatHub').build();
+   
+    this.hubConnection.start().catch(err => console.log(err));
+    this.hubConnection.on("ReceiverMessage", (chatId: number, message: MessageModel, notification: string) => {
+      this.chatService.updateChatMessages(chatId,message)
+      console.error(notification);
+    })
+    this.refreshMessages;
+
   }
-  getChatById(chatId:number) {
-    this.chatService.getChatById(chatId);
+   getChatById(chatId:number) {
+   return this.chatService.getChatById(chatId);
+  }
+  refreshMessages() {
+    this.chatService.getChats();
   }
 
 }

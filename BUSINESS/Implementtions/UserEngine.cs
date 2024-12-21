@@ -2,6 +2,7 @@
 using COMMON.dtos;
 using COMMON.interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System;
@@ -17,10 +18,13 @@ namespace BUSINESS.Implementtions
     {
         private readonly IUnitofWork _uow;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UserEngine(IUnitofWork uow, IHttpContextAccessor httpContextAccessor)
+        private readonly IConfiguration _conf;
+
+        public UserEngine(IUnitofWork uow, IHttpContextAccessor httpContextAccessor, IConfiguration conf)
         {
             _uow = uow;
             _httpContextAccessor = httpContextAccessor;
+            _conf = conf;
         }
 
         public async Task<UserDto> GetLoggedUser()
@@ -40,19 +44,30 @@ namespace BUSINESS.Implementtions
 
             return res ?? new UserDto();
         }
-        public async Task<bool> UpdateUserSettings(UserSettingsDto userSettings)
+        public async Task<bool> UpdateUserSettings(UserSettingsDto userSettings, IFormFile? profilePic)
         {
-            var currentUser = await GetLoggedUser(); 
-            currentUser.ProfilePic = userSettings.ProfilePic;
-            currentUser.Password = userSettings.Password;
-            currentUser.Email = userSettings.Email;
+            var currentUser = await GetLoggedUser();
+            currentUser.Password = AuthEngine.HashPassword(userSettings.Password);
+            currentUser.Email = userSettings.Email; 
             currentUser.PhoneNumber = userSettings.PhoneNumber;
             currentUser.UserName = userSettings.UserName;
+            if (profilePic != null)
+            {
+                var fileExtension = Path.GetExtension(profilePic.FileName);
+                var fileName = Guid.NewGuid().ToString() + fileExtension;
+                var path = Path.Combine(_conf["FileSettings:UploadPath"], fileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await profilePic.CopyToAsync(stream);
+                }
+                currentUser.ProfilePic = Path.Combine("uploads", fileName).Replace("\\", "//");
+
+            }
 
 
-           await _uow.users.UpdateAsync(currentUser.Id.ToString(), currentUser);
+            await _uow.users.UpdateAsync(currentUser.Id.ToString(), currentUser);
 
-            return true;  
+            return true;
         }
 
 

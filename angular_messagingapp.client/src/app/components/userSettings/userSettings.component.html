@@ -24,9 +24,12 @@
     <div class="form-group">
       <label for="profilePic">Profile Picture</label>
       <input type="file" id="profilePic" (change)="onFileSelected($event)" />
-      <div *ngIf="user.profilePic">
+      <div *ngIf="user.profilePic; else defaultUserPicture">
         <img [src]="userSettingsModel.profilePic" alt="Profile Picture" class="profile-pic-preview" />
       </div>
+      <ng-template #defaultUserPicture>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-odagfgTkIJAJFY0UmNVAxC_pemR52Czyg&s" alt="Profile Picture" class="profile-pic-preview" />
+      </ng-template>
     </div>
 
     <button type="submit" class="submit-btn">Save Changes</button>

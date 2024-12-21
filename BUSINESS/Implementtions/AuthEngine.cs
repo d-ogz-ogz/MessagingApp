@@ -2,7 +2,9 @@
 using BUSINESS.Contracts;
 using COMMON.dtos;
 using COMMON.interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -24,10 +26,13 @@ namespace BUSINESS.Implementtions
 
         private readonly IUnitofWork _uow;
         private readonly IDistributedCache _cache; //veri saklama ve erişim için arayüze ulaşacağız. dağıtılmış bir önbellek sisteminde veri saklamak ve bu verilere erişmek için kullanılan bir yapıdır.
-        public AuthEngine(IUnitofWork uow, IDistributedCache cache)
+        private readonly IConfiguration _conf;
+
+        public AuthEngine(IUnitofWork uow, IDistributedCache cache,IConfiguration conf)
         {
             _uow = uow;
             _cache = cache;
+            _conf = conf;
         }
 
         private const string SecretKey = "buçokgizlibirşifreanahtarıdırbilginizolsun";
@@ -122,16 +127,30 @@ namespace BUSINESS.Implementtions
             return res;
         }
 
-        public UserDto Register(UserDto user)
+          public  async Task<UserDto> Register(UserDto user, IFormFile? profilePic =null)
         {
             UserDto registerModel = new UserDto();
-            var userData = _uow.users.GetAllAsync().Result;
+            var userData = await _uow.users.GetAllAsync();
             if (user != null)
             {
                 foreach (var logModel in userData)
                 {
                     if (user.UserName != logModel.UserName && user.Email != logModel.Email && logModel.Password!=null)
                     {
+                    
+                        if (profilePic != null)
+                        {
+                            var fileExtension = Path.GetExtension(profilePic.FileName);
+                            var fileName = $"{Guid.NewGuid()}{fileExtension}";
+                            var filePath = Path.Combine(_conf["FileSettings:UploadPath"], fileName);
+
+                            //resmi kaydet
+                            using (var stream= new FileStream(filePath, FileMode.Create))
+                            {
+                                await profilePic.CopyToAsync(stream);
+                            }
+                            registerModel.ProfilePic = Path.Combine("uploads", fileName).Replace("\\", "//");
+                        }
 
 
                         registerModel.UserName = logModel.UserName;
@@ -144,7 +163,8 @@ namespace BUSINESS.Implementtions
                         registerModel.Consent = logModel.Consent;
                         registerModel.Inform = logModel.Inform;
                         registerModel.isSuccess = true;
-                        _uow.users.CreateAsync(user).Wait();
+
+                        await _uow.users.CreateAsync(user);
                     }
                     registerModel.isSuccess = false;
 
@@ -187,3 +207,9 @@ namespace BUSINESS.Implementtions
 
 
 
+//DOSYA İŞLEMLERİ
+//Uzantıyı al
+//Benzersiz Dosya Adı Oluştur.
+//Dosya yolu oluştur ( wwwroot/uploads altına kaydedilir)
+//Dosya Kaydet
+//Dosya yolu ekle

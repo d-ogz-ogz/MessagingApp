@@ -1,4 +1,5 @@
 ﻿using COMMON.dtos;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace BUSINESS.Contracts
 {
     public interface IUserEngine
     {
-        public Task<bool> UpdateUserSettings(UserSettingsDto userSettings);
-       
+        public  Task<bool> UpdateUserSettings(UserSettingsDto userSettings, IFormFile profilePic);
+
+
     }
 }

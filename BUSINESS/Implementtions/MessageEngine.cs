@@ -1,8 +1,11 @@
 ﻿using BUSINESS.Contracts;
+using BUSINESS.hubs;
 using COMMON.dtos;
 using COMMON.interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +21,15 @@ namespace BUSINESS.Implementtions
 
         private readonly IUnitofWork _uow;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public MessageEngine(IUnitofWork uow, IHttpContextAccessor httpContextAccessor)
+        private readonly IHubContext<ChatHub> _hubContext;
+        public MessageEngine(IUnitofWork uow, IHttpContextAccessor httpContextAccessor,IHubContext<ChatHub> hubContext)
         {
             _uow = uow;
             _httpContextAccessor = httpContextAccessor;
+            _hubContext = hubContext;
         }
 
-        public async Task<UserDto> GetLoggedUser()
+        public  async Task<UserDto> GetLoggedUser()
         {
             UserDto res = new UserDto();
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -42,35 +47,6 @@ namespace BUSINESS.Implementtions
             return res ?? new UserDto();
         }
 
-        public async Task<List<MessageDto>> GetChatMessages(string chatId)
-        {
-            if (chatId.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException("Chat Id is required");
-            }
-
-
-            var chat = await _uow.chats.GetByIdAsync(chatId);
-
-            if (chat == null || chat.Messages == null)
-            {
-                return new List<MessageDto>();
-            }
-
-
-            return chat.Messages.Select(mes => new MessageDto
-            {
-
-                Id = mes.Id,
-                ChatId = mes.ChatId,
-                Content = mes.Content,
-                Adding = mes.Adding
-            }).ToList();
-
-
-
-
-        }
 
         public async Task<bool> SendMessage(string chatId, string messageContent, string receiverId)
         {
@@ -91,7 +67,6 @@ namespace BUSINESS.Implementtions
             if (currentChat != null)
             {
                 await _uow.messages.CreateAsync(newMessage);
-                currentChat?.Messages?.Add(newMessage);
                 await _uow.chats.UpdateAsync(chatId, currentChat);
 
 
@@ -109,8 +84,8 @@ namespace BUSINESS.Implementtions
 
 
 
-
-
+            await UpdateChatMessages(chatId, newMessage);
+            await _hubContext.Clients.User(receiverId).SendAsync("ReceiverMessage",chatId, newMessage,receiverId,"Yeni Mesaj Geldi");
             return res;
         }
 
@@ -161,7 +136,32 @@ namespace BUSINESS.Implementtions
                 throw new Exception("Something went wrong by adding new chat" + e.Message);
             }
         }
+        public async Task<List<MessageDto>> GetChatMessages(string chatId)
+        {
+          
+            return await _uow.messages.GetFilteredAsync(i => i.ChatId == chatId) ?? new List<MessageDto>();
 
+        }
+
+
+        public async Task<bool> UpdateChatMessages(string chatId, MessageDto message)
+        {
+            if (chatId.IsNullOrEmpty()) {
+                throw new ArgumentNullException(nameof(chatId), "can't be null");
+               
+            }
+            try
+            {
+                await _uow.messages.UpdateAsync(chatId, message);
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+         
+        }
 
     }
 

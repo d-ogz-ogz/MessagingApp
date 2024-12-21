@@ -1,6 +1,7 @@
 ﻿using COMMON.interfaces;
 using DATA.Db;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,20 @@ namespace DATA.Implemetations
 
     {
         private readonly IMongoCollection<T> _collection;
+        private readonly IMongoClient _mongoClient;
+
         public Repository(MessagingAppDbContext context, string collectionName)
         {
+
             _collection = context.GetCollection<T>(collectionName);
+            _mongoClient = context.MongoClient;
         }
 
         public async Task<List<T>> GetAllAsync()
         {
             return await _collection.Find(_ => true).ToListAsync();
         }
-     public async Task<List<T>> GetFilteredAsync(Expression<Func<T,bool>> filter)
+        public async Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> filter)
         {
             var query = _collection.AsQueryable().Where(filter);
             return await query.ToListAsync();
@@ -37,20 +42,49 @@ namespace DATA.Implemetations
 
         public async Task CreateAsync(T entity)
         {
+
             await _collection.InsertOneAsync(entity);
         }
 
         public async Task UpdateAsync(string id, T entity)
         {
-            await _collection.ReplaceOneAsync(x => x.Id == id, entity);
+            var update = Builders<T>.Update.Push("Messages", entity);
+            await _collection.UpdateOneAsync(x => x.Id == id, update);
+
         }
 
         public async Task DeleteAsync(string id)
 
         {
-            //var filter = Builders<T>.Filter.Eq("Id", id);
-            await _collection.DeleteOneAsync(x => x.Id == id);
+            var filter = Builders<T>.Filter.Eq("Id", id);
+            await _collection.DeleteOneAsync(filter);
         }
+
+
+        public async Task CreateWithTransactionAsync(T entity,string updateId,T updateEntity)
+        {
+            using (var session = await _mongoClient.StartSessionAsync()) {
+
+                session.StartTransaction();
+                try
+                {
+                    
+                    await _collection.InsertOneAsync(session, entity);
+                    var update = Builders<T>.Update.Set("xx", updateEntity); ;
+                    await _collection.UpdateOneAsync(x => x.Id == updateId, update);
+                    await session.CommitTransactionAsync();
+                }
+                catch (Exception)
+                {
+
+                    await session.AbortTransactionAsync();
+                    throw;
+                }
+            
+            
+            }
+        }
+
     }
 }
-   
+

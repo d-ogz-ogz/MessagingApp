@@ -14,10 +14,12 @@ namespace Angular_MessagingApp.Server.Controllers
         {
             _chatEngine=chatEngine;
         }
-        public async Task<List<ChatDto>> GetChats(string userId)
+        [HttpGet("GetUserChats")]
+        public async Task<List<ChatDto>> GetUserChats()
         {
-            return await _chatEngine.GetChats(userId);
+            return await _chatEngine.GetUserChats();
         }
+        [HttpGet("GetChatById")]
         public async Task<ChatDto> GetChatById(string chatId)
         {
             return await _chatEngine.GetChatById(chatId);
